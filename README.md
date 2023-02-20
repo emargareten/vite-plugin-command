@@ -28,6 +28,25 @@ export default defineConfig({
 })
 ```
 
+You can also run multiple commands by passing an array of objects.
+
+```js
+export default defineConfig({
+  plugins: [ 
+    command([
+      {
+        pattern: "routes/**/*.php",
+        run: "php artisan ziggy:generate",
+      },
+      {
+        pattern: "app/{Data,Enums}/**/*.php",
+        run: "php artisan typescript:transform",
+      },
+    ]),
+  ],
+})
+```
+
 Once a tracked file changes, the plugin will execute the specified command.
 
 ## Plugin options
