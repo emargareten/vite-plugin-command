@@ -9,8 +9,7 @@ interface CommandConfig {
   silent?: boolean
   throttle?: number
   startup?: boolean
-  onSuccess?: (output?: string) => void
-  onError?: () => void
+  customOutput?: string
 }
 
 export const command = (config: CommandConfig): PluginOption => {
@@ -25,17 +24,12 @@ export const command = (config: CommandConfig): PluginOption => {
 
   const execute = () => {
     exec(options.run, (error, stdout, stderr) => {
-      if (error) {
-        if (!options.silent) console.error(error.message)
-        if (options.onError) options.onError()
+      if (!options.silent) {
+        if (error) console.error(error.message)
+        if (stderr) console.error(stderr)
+        if (stdout) console.log(stdout)
       }
-      else if (stderr) {
-        if (!options.silent) console.error(stderr)
-      }
-      else if (stdout) {
-        if (!options.silent) console.log(stdout)
-        if (options.onSuccess) options.onSuccess(stdout)
-      }
+      if (options.customOutput) console.log(options.customOutput)
     })
   }
 
