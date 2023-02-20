@@ -12,50 +12,67 @@ interface CommandConfig {
   customOutput?: string
 }
 
-export const command = (config: CommandConfig): PluginOption => {
-  const options = {
+const execute = (command: string, silent: boolean, customOutput?: string) => {
+  exec(command, (error, stdout, stderr) => {
+    if (!silent) {
+      if (error) console.error(error.message)
+      if (stderr) console.error(stderr)
+      if (stdout) console.log(stdout)
+    }
+    if (customOutput) console.log(customOutput)
+  })
+}
+
+export const command = (config: CommandConfig|CommandConfig[]): PluginOption => {
+  const items = Array.isArray(config) ? config : [config];
+
+  const defaultOptions = {
     silent: false,
     throttle: 500,
     startup: true,
-    ...config,
   }
 
-  let throttled = false
+  const throttled: boolean[] = []
 
-  const execute = () => {
-    exec(options.run, (error, stdout, stderr) => {
-      if (!options.silent) {
-        if (error) console.error(error.message)
-        if (stderr) console.error(stderr)
-        if (stdout) console.log(stdout)
-      }
-      if (options.customOutput) console.log(options.customOutput)
-    })
-  }
+  items.forEach((item, index) => {
+    throttled[index] = false
+  })
 
   return {
     name: "vite-plugin-command",
 
     buildStart() {
-      if (options.startup) {
-        execute()
-      }
+      items.forEach(item => {
+        const options = { ...defaultOptions, ...item }
+
+        if (options.startup) {
+          execute(options.run, options.silent, options.customOutput)
+        }
+      })
     },
 
     handleHotUpdate({ file, server }) {
-      if (throttled) return
 
-      throttled = true
+      items.forEach((item, index) => {
 
-      setTimeout(() => (throttled = false), options.throttle)
+        if (throttled[index]) {
+          return
+        }
 
-      const patterns = Array.isArray(options.pattern) ? options.pattern : Array.of(options.pattern)
+        throttled[index] = true
 
-      const shouldRun = patterns.find((pattern) => minimatch(file, path.resolve(server.config.root, pattern)))
+        const options = {...defaultOptions, ...item}
 
-      if (shouldRun) {
-        execute()
-      }
+        setTimeout(() => (throttled[index] = false), options.throttle)
+
+        const patterns = Array.isArray(options.pattern) ? options.pattern : Array.of(options.pattern)
+
+        const shouldRun = patterns.find((pattern) => minimatch(file, path.resolve(server.config.root, pattern)))
+
+        if (shouldRun) {
+          execute(options.run, options.silent, options.customOutput)
+        }
+      })
     },
   }
 }
