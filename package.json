@@ -1,0 +1,51 @@
+{
+  "name": "vite-plugin-command",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "rollup -c && tsc --declaration --emitDeclarationOnly",
+    "lint": "eslint src/** --fix"
+  },
+  "description": "Vite plugin to run custom commands on file changes",
+  "keywords": [
+    "vite",
+    "vite-plugin"
+  ],
+  "author": "emargareten",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emargareten/vite-plugin-command.git"
+  },
+  "homepage": "https://github.com/emargareten/vite-plugin-command#readme",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/vite-plugin-command.umd.cjs",
+  "module": "./dist/vite-plugin-command.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vite-plugin-command.js",
+      "require": "./dist/vite-plugin-command.umd.cjs"
+    }
+  },
+  "engines": {
+    "node": ">=10.6.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/minimatch": "^5.1.2",
+    "@types/node": "^18.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-node": "^11.1.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.3"
+  },
+  "dependencies": {
+    "minimatch": "^5.1.1"
+  }
+}
