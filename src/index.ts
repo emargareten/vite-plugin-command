@@ -17,7 +17,7 @@ const execute = (command: string, silent: boolean, customOutput?: string | ((std
     if (!silent) {
       if (error) console.error('\n'+error.message)
       if (stderr) console.error('\n'+stderr)
-      if (stdout) console.log('\n'+stdout)
+      if (!customOutput && stdout) console.log('\n'+stdout)
     }
     if (customOutput)
       if (typeof customOutput === 'function') {
