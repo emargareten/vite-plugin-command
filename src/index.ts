@@ -15,9 +15,9 @@ interface CommandConfig {
 const execute = (command: string, silent: boolean, customOutput?: string) => {
   exec(command, (error, stdout, stderr) => {
     if (!silent) {
-      if (error) console.error(error.message)
-      if (stderr) console.error(stderr)
-      if (stdout) console.log(stdout)
+      if (error) console.error('\n'+error.message)
+      if (stderr) console.error('\n'+stderr)
+      if (stdout) console.log('\n'+stdout)
     }
     if (customOutput) console.log(customOutput)
   })
