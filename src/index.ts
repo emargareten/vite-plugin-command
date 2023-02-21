@@ -9,17 +9,22 @@ interface CommandConfig {
   silent?: boolean
   throttle?: number
   startup?: boolean
-  customOutput?: string
+  customOutput?: string | ((stdout: string) => string)
 }
 
-const execute = (command: string, silent: boolean, customOutput?: string) => {
+const execute = (command: string, silent: boolean, customOutput?: string | ((stdout: string) => string)) => {
   exec(command, (error, stdout, stderr) => {
     if (!silent) {
       if (error) console.error('\n'+error.message)
       if (stderr) console.error('\n'+stderr)
       if (stdout) console.log('\n'+stdout)
     }
-    if (customOutput) console.log(customOutput)
+    if (customOutput)
+      if (typeof customOutput === 'function') {
+        console.log(customOutput(stdout))
+      } else {
+        console.log(customOutput)
+      }
   })
 }
 
