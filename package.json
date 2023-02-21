@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-command",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "build": "rollup -c && tsc --declaration --emitDeclarationOnly",
     "lint": "eslint src/** --fix"
@@ -11,6 +11,7 @@
     "vite-plugin"
   ],
   "author": "emargareten",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/emargareten/vite-plugin-command.git"
