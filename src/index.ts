@@ -1,5 +1,5 @@
 import { PluginOption } from "vite"
-import minimatch from "minimatch"
+import { minimatch } from "minimatch"
 import path from "node:path"
 import { exec } from 'node:child_process'
 
