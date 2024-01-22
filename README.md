@@ -51,14 +51,14 @@ Once a tracked file changes, the plugin will execute the specified command.
 
 ## Plugin options
 
-| name           | type                             | description                                                                                           | default |
-|----------------|----------------------------------|-------------------------------------------------------------------------------------------------------|---------|
-| `pattern`      | `string` or `string[]`           | Tracked files paths (minimatch pattern)                                                               |         |
-| `run`          | `string`                         | The command to be executed                                                                            |         |
-| `silent`       | `boolean`                        | Hide the command output in the console                                                                | `false` |
-| `throttle`     | `number`                         | Delay before the command can be re-executed                                                           | `500`   |
-| `startup`      | `boolean`                        | Run the command  when Vite starts                                                                     | `true`  |
-| `customOutput` | `string` or `(output) => string` | Display a custom output in the console after command ran (when set the command output will be hidden) |         |
+| name           | type                             | description                                                                                            | default |
+|----------------|----------------------------------|--------------------------------------------------------------------------------------------------------|---------|
+| `pattern`      | `string` or `string[]`           | Tracked files paths (minimatch pattern)                                                                |         |
+| `run`          | `string`                         | The command to be executed                                                                             |         |
+| `silent`       | `boolean`                        | Hide the command output in the console                                                                 | `false` |
+| `throttle`     | `number`                         | Delay before the command can be re-executed (in milliseconds)                                          | `500`   |
+| `startup`      | `boolean`                        | Run the command  when Vite starts                                                                      | `true`  |
+| `customOutput` | `string` or `(output) => string` | Display a custom output in the console after command ran (when set, the command output will be hidden) |         |
 
 ## License
 
