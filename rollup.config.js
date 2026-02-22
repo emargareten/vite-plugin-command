@@ -19,4 +19,5 @@ export default {
         tsPlugin(),
         commonjs(),
     ],
+    external: ['minimatch'],
 }
