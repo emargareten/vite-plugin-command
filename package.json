@@ -1,9 +1,10 @@
 {
   "name": "vite-plugin-command",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "scripts": {
     "build": "rollup -c && tsc --declaration --emitDeclarationOnly",
-    "lint": "eslint src/** --fix"
+    "lint": "eslint src/** tests/** --fix",
+    "test": "npm run build && node --test tests/command.test.js"
   },
   "description": "Vite plugin to run custom commands on file changes",
   "keywords": [
